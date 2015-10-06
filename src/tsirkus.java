@@ -12,6 +12,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 
+import java.util.Stack;
+
 
 public class tsirkus extends Application{
 
@@ -43,8 +45,6 @@ public class tsirkus extends Application{
         /* Loome vasaku välja */
         VBox VasakVali = new VBox();
         Button veeretaNupp = new Button();
-        Text taringunumber = new Text();
-        StackPane stack = new StackPane();
 
         VasakVali.setSpacing(10);
 
@@ -53,13 +53,24 @@ public class tsirkus extends Application{
         veeretaNupp.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle (ActionEvent e){
                 // Siia tegevus, kui nupp on vajutatud.
-                taringunumber.setText(Integer.toString(sammud()));
+                //taringunumber.setText(Integer.toString(sammud()));
             }
         });
 
         VasakVali.getChildren().add(veeretaNupp);
 
+
+        VasakVali.getChildren().add(taring());
+
+        //Saadame Vasaku välja tagasi
+        return VasakVali;
+    }
+
+    private StackPane taring() {
         //Täring
+        Text taringunumber = new Text();
+        StackPane stack = new StackPane();
+
         Rectangle taring = new Rectangle(30, 30, 50, 50);
         taring.setFill(Color.RED);
 
@@ -71,10 +82,8 @@ public class tsirkus extends Application{
 
         //Lisame täringule sisu
         stack.getChildren().addAll(taring, taringunumber);
-        VasakVali.getChildren().add(stack);
 
-        //Saadame Vasaku välja tagasi
-        return VasakVali;
+        return stack;
     }
     private GridPane LooManguLaud (int RuuteLaual) {
         // Teeb sobiva mängulaua
