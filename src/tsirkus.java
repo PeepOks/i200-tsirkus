@@ -46,7 +46,7 @@ public class tsirkus extends Application{
         Text taringunumber = new Text();
         StackPane stack = new StackPane();
 
-        VasakVali.setSpacing(15);
+        VasakVali.setSpacing(10);
 
         /*Loome Veeretamis nupu*/
         veeretaNupp.setText("Veereta Täringut");
