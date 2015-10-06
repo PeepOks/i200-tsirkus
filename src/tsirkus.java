@@ -42,13 +42,14 @@ public class tsirkus extends Application{
     private VBox LooVasakVali (){
         /* Loome vasaku välja */
         VBox VasakVali = new VBox();
+        Button veeretaNupp = new Button();
         Text taringunumber = new Text();
+        StackPane stack = new StackPane();
 
-
-        VasakVali.setSpacing(10);
+        VasakVali.setSpacing(15);
 
         /*Loome Veeretamis nupu*/
-        Button veeretaNupp = new Button("Veereta Täringut");
+        veeretaNupp.setText("Veereta Täringut");
         veeretaNupp.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle (ActionEvent e){
                 // Siia tegevus, kui nupp on vajutatud.
@@ -58,21 +59,21 @@ public class tsirkus extends Application{
 
         VasakVali.getChildren().add(veeretaNupp);
 
-        /*Loome täringu*/
-        StackPane stack = new StackPane();
-
+        //Täring
         Rectangle taring = new Rectangle(30, 30, 50, 50);
         taring.setFill(Color.RED);
 
-
+        //Täringu sisu
         taringunumber.setText(Integer.toString(sammud()));
         taringunumber.setFill(Color.WHITE);
         taringunumber.setFont(Font.font("Verdana", 20));
         taringunumber.setTextAlignment(TextAlignment.RIGHT);
 
+        //Lisame täringule sisu
         stack.getChildren().addAll(taring, taringunumber);
         VasakVali.getChildren().add(stack);
 
+        //Saadame Vasaku välja tagasi
         return VasakVali;
     }
     private GridPane LooManguLaud (int RuuteLaual) {
@@ -106,7 +107,6 @@ public class tsirkus extends Application{
             } else {
                 veerg++;
             }
-
             if (i%10==0){
                 rida++;
                 if (!suundTagasi) {
@@ -121,8 +121,6 @@ public class tsirkus extends Application{
 
         return mangulaud;
     }
-
-
 
     /*
     public static void main(String[] args) {
