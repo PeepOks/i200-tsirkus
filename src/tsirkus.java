@@ -14,15 +14,15 @@ import javafx.stage.*;
 
 import java.util.Stack;
 
+public class tsirkus extends Application implements EventHandler<ActionEvent>{
 
-public class tsirkus extends Application{
-
-    public BorderPane Raamistik;
-
+    public static void main(String[] args) {
+        launch(args);
+    }
     @Override
     public void start(Stage laud) {
 
-        Raamistik = new BorderPane();
+        BorderPane Raamistik = new BorderPane();
         Raamistik.setMinSize(600,300);
 
 
@@ -31,7 +31,7 @@ public class tsirkus extends Application{
         Pealkiri.setFont(Font.font("Verdana", 30));
         Pealkiri.setPrefHeight(50);
         Raamistik.setTop(Pealkiri);
-        Raamistik.setCenter(LooManguLaud(50));
+       // Raamistik.setCenter(LooManguLaud(50));
         Raamistik.setLeft(LooVasakVali());
 
         Scene scene = new Scene(Raamistik, 800, 500);
@@ -40,37 +40,31 @@ public class tsirkus extends Application{
         laud.show();
 
     }
-
-    private VBox LooVasakVali (){
-        /* Loome vasaku välja */
+    public VBox LooVasakVali (){
+    /* Loome vasaku välja */
         VBox VasakVali = new VBox();
-        Button veeretaNupp = new Button();
 
-        VasakVali.setSpacing(10);
-
-        /*Loome Veeretamis nupu*/
-        veeretaNupp.setText("Veereta Täringut");
-        veeretaNupp.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle (ActionEvent e){
-                // Siia tegevus, kui nupp on vajutatud.
-                //taringunumber.setText(Integer.toString(sammud()));
-            }
-        });
-
-        VasakVali.getChildren().add(veeretaNupp);
-
-
-        VasakVali.getChildren().add(taring());
-
-        //Saadame Vasaku välja tagasi
-        return VasakVali;
-    }
-
-    private StackPane taring() {
-        //Täring
         Text taringunumber = new Text();
         StackPane stack = new StackPane();
 
+        VasakVali.setSpacing(10);
+
+        /*Loome Veeretamise nupu*/
+        Button VeeretamisNupp = new Button();
+        VeeretamisNupp.setText("Veereta Täringut");
+        VeeretamisNupp.setOnAction(this);
+        VasakVali.getChildren().add(VeeretamisNupp);
+        /*
+        veeretaNupp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle (ActionEvent e){
+                // Siia tegevus, kui nupp on vajutatud.
+                taringunumber.setText(Integer.toString(sammud()));
+            }
+        });
+        */
+
+
+        //Täring
         Rectangle taring = new Rectangle(30, 30, 50, 50);
         taring.setFill(Color.RED);
 
@@ -82,8 +76,10 @@ public class tsirkus extends Application{
 
         //Lisame täringule sisu
         stack.getChildren().addAll(taring, taringunumber);
+        VasakVali.getChildren().add(stack);
 
-        return stack;
+        //Saadame Vasaku välja tagasi
+        return VasakVali;
     }
     private GridPane LooManguLaud (int RuuteLaual) {
         // Teeb sobiva mängulaua
@@ -131,12 +127,12 @@ public class tsirkus extends Application{
         return mangulaud;
     }
 
-    /*
-    public static void main(String[] args) {
 
-        System.out.println("Ma saan teha kokku " + sammud() + " sammu.");
+    @Override
+    public void handle(ActionEvent event) {
+
     }
-    */
+
     static int sammud () {
         boolean viskauuesti = true;
         int tulemus = 0;
