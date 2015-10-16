@@ -44,8 +44,8 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
     /* Loome vasaku välja */
         VBox VasakVali = new VBox();
 
-        Text taringunumber = new Text();
-        StackPane stack = new StackPane();
+
+
 
         VasakVali.setSpacing(10);
 
@@ -63,7 +63,7 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         });
         */
 
-
+        /*
         //Täring
         Rectangle taring = new Rectangle(30, 30, 50, 50);
         taring.setFill(Color.RED);
@@ -73,10 +73,13 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         taringunumber.setFill(Color.WHITE);
         taringunumber.setFont(Font.font("Verdana", 20));
         taringunumber.setTextAlignment(TextAlignment.RIGHT);
-
+        */
         //Lisame täringule sisu
-        stack.getChildren().addAll(taring, taringunumber);
-        VasakVali.getChildren().add(stack);
+
+        taring t1 = new taring();
+
+
+        VasakVali.getChildren().add(t1.);
 
         //Saadame Vasaku välja tagasi
         return VasakVali;
@@ -138,7 +141,7 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         int tulemus = 0;
         int vise = 0;
         while(viskauuesti) {
-            vise = veeretaTaringut();
+            vise = taring.VeeretaTaringut();
             if (vise == 6) {
                 System.out.println("Viskasin täringul " + vise +  " ja saan uue viske :)");
                 tulemus = tulemus + vise;
@@ -150,10 +153,6 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
             }
         }
         return tulemus;
-    }
-
-    static int veeretaTaringut () {
-        return (int)(Math.random()*6)+1;
     }
 
 
