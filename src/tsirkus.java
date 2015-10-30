@@ -19,34 +19,48 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
     public static void main(String[] args) {
         launch(args);
     }
+    public static BorderPane GameBoard;
     @Override
-    public void start(Stage laud) {
+    public void start(Stage Game) {
+        //Loome uue mänguvälja
+        GameBoard = createGameBoard();
 
-        BorderPane Raamistik = new BorderPane();
-        Raamistik.setMinSize(600,300);
+        //Lisame pealkirja Mänguväljakule päisesse
+        GameBoard.setTop(GameTitle());
+
+        //Lisame mänguvälja keskele mänguruudud. Parameetrina mänguruutude arv
+        GameBoard.setCenter(LooManguLaud(50));
+
+        //Lisame mänguvälja vasaku ääre kuhu tuleb nupud ja täringud
+        GameBoard.setLeft(LooVasakVali());
 
 
-        Label Pealkiri = new Label();
-        Pealkiri.setText("Tsirkuse Mäng");
-        Pealkiri.setFont(Font.font("Verdana", 30));
-        Pealkiri.setPrefHeight(50);
-        Raamistik.setTop(Pealkiri);
-       // Raamistik.setCenter(LooManguLaud(50));
-        Raamistik.setLeft(LooVasakVali());
-
-        Scene scene = new Scene(Raamistik, 800, 500);
-        laud.setTitle("Tsirkus");
-        laud.setScene(scene);
-        laud.show();
+        Scene scene = new Scene(GameBoard, 800, 500);
+        Game.setTitle("Tsirkus");
+        Game.setScene(scene);
+        Game.show();
 
     }
-    public VBox LooVasakVali (){
+
+    private Node GameTitle() {
+        //Loome mänguväljale Pealkijra
+        Label GameTitle = new Label();
+        GameTitle.setText("Tsirkuse Mäng");
+        GameTitle.setFont(Font.font("Verdana", 30));
+        GameTitle.setPrefHeight(50);
+        return GameTitle;
+    }
+
+    private BorderPane createGameBoard() {
+        GameBoard = new BorderPane();
+        GameBoard.setMinSize(600, 300);
+
+        return GameBoard;
+    }
+
+    public Node LooVasakVali (){
     /* Loome vasaku välja */
         VBox VasakVali = new VBox();
-
-
-
-
         VasakVali.setSpacing(10);
 
         /*Loome Veeretamise nupu*/
@@ -75,11 +89,6 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         taringunumber.setTextAlignment(TextAlignment.RIGHT);
         */
         //Lisame täringule sisu
-
-        taring t1 = new taring();
-
-
-        VasakVali.getChildren().add(t1.);
 
         //Saadame Vasaku välja tagasi
         return VasakVali;
@@ -130,29 +139,9 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         return mangulaud;
     }
 
-
     @Override
     public void handle(ActionEvent event) {
 
-    }
-
-    static int sammud () {
-        boolean viskauuesti = true;
-        int tulemus = 0;
-        int vise = 0;
-        while(viskauuesti) {
-            vise = taring.VeeretaTaringut();
-            if (vise == 6) {
-                System.out.println("Viskasin täringul " + vise +  " ja saan uue viske :)");
-                tulemus = tulemus + vise;
-                viskauuesti = true;
-            } else {
-                System.out.println("Viskasin täringul " + vise);
-                tulemus = tulemus + vise;
-                viskauuesti = false;
-            }
-        }
-        return tulemus;
     }
 
 
