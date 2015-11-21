@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -12,50 +13,70 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 
-import java.util.Stack;
 
 public class tsirkus extends Application implements EventHandler<ActionEvent>{
 
     public static void main(String[] args) {
         launch(args);
     }
-    public static BorderPane GameBoard;
+    Stage TsirkuseMang;
+    StackPane Game;
+    BorderPane GameBoard;
+    GridPane ManguRuudustik;
+    StackPane ManguRuut;
+    double ManguLauaLaius = 600.0;
+    double ManguLauaKorgus = 350.0;
+
     @Override
-    public void start(Stage Game) {
+    public void start(Stage PrimaryStage) {
+        TsirkuseMang = PrimaryStage;
         //Loome uue mänguvälja
-        GameBoard = createGameBoard();
+        LooManguVali();
 
-        //Lisame pealkirja Mänguväljakule päisesse
-        GameBoard.setTop(GameTitle());
-
-        //Lisame mänguvälja keskele mänguruudud. Parameetrina mänguruutude arv
-        GameBoard.setCenter(LooManguLaud(50));
+        //Lisame pealkirja Mänguväljale päisesse
+        LooManguPais();
 
         //Lisame mänguvälja vasaku ääre kuhu tuleb nupud ja täringud
         GameBoard.setLeft(LooVasakVali());
 
+        //Lisame mänguvälja keskele mänguruudud. Parameetrina mänguruutude arv
 
-        Scene scene = new Scene(GameBoard, 800, 500);
-        Game.setTitle("Tsirkus");
-        Game.setScene(scene);
-        Game.show();
-
+        LooManguLaud(100);
     }
 
-    private Node GameTitle() {
+    private void LooManguPais() {
         //Loome mänguväljale Pealkijra
         Label GameTitle = new Label();
         GameTitle.setText("Tsirkuse Mäng");
+        GameTitle.setTextFill(Color.YELLOW);
         GameTitle.setFont(Font.font("Verdana", 30));
-        GameTitle.setPrefHeight(50);
-        return GameTitle;
+        GameTitle.setTextAlignment(TextAlignment.JUSTIFY);
+        GameTitle.setMinHeight(100);
+        GameTitle.setPrefWidth(Double.MAX_VALUE);
+        GameTitle.setAlignment(Pos.CENTER);
+        GameTitle.setStyle("-fx-background-color: green");
+
+
+        GameBoard.setTop(GameTitle);
     }
 
-    private BorderPane createGameBoard() {
+    private void LooManguVali() {
+        //Loome Mängu
+        Game = new StackPane();
+        Game.setStyle("-fx-background-color: brown;");
+        //Loome Mängulaua
         GameBoard = new BorderPane();
-        GameBoard.setMinSize(600, 300);
+        GameBoard.setMinSize(800, 600);
+        Game.getChildren().add(GameBoard);
 
-        return GameBoard;
+        Scene scene = new Scene(Game);
+        //TsirkuseMang.setMaximized(true);
+        TsirkuseMang.setTitle("Tsirkus");
+        TsirkuseMang.setScene(scene);
+        TsirkuseMang.show();
+        TsirkuseMang.setOnCloseRequest(event -> {
+            System.exit(0);
+        }); //akna sulgedes läheb programm kinni
     }
 
     public Node LooVasakVali (){
@@ -77,47 +98,54 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         });
         */
 
-        /*
+
         //Täring
         Rectangle taring = new Rectangle(30, 30, 50, 50);
-        taring.setFill(Color.RED);
+        taring.setFill(Color.WHITESMOKE);
 
         //Täringu sisu
-        taringunumber.setText(Integer.toString(sammud()));
+        Text taringunumber = new Text();
+        taringunumber.setText(Integer.toString(4));
         taringunumber.setFill(Color.WHITE);
         taringunumber.setFont(Font.font("Verdana", 20));
         taringunumber.setTextAlignment(TextAlignment.RIGHT);
-        */
+
         //Lisame täringule sisu
 
         //Saadame Vasaku välja tagasi
         return VasakVali;
     }
-    private GridPane LooManguLaud (int RuuteLaual) {
+
+    private void LooManguLaud (int RuuteLaual) {
         // Teeb sobiva mängulaua
+        StackPane ManguLaud = new StackPane();
 
-        GridPane mangulaud = new GridPane();
-        //mangulaud.setGridLinesVisible(true);
-        mangulaud.setHgap(2);
-        mangulaud.setVgap(2);
-        mangulaud.setPadding(new Insets(10, 0, 0, 100));
-
-        int rida = 1;
+        //Loome mänguruudustiku
+        double ruuduLaius = ManguLauaLaius/11;
+        double ruuduKorgus = ManguLauaKorgus/10;
+        ManguRuudustik = new GridPane();
+        ManguRuudustik.setGridLinesVisible(true);
+        int rida = 10;
         int veerg = 1;
         boolean suundTagasi = false;
         for (int i=1; i<=RuuteLaual; i++){
-            /*
-            Text number = new Text(Integer.toString(i));
-            */
-            Label number = new Label(Integer.toString(i));
-            number.setFont(Font.font("Verdana", 12));
-            number.setTextAlignment(TextAlignment.CENTER);
-            number.setStyle("-fx-border-color:red; -fx-background-color: Green;");
-            number.setPadding(new Insets(0,0,0,10));
-            number.setMinHeight(40);
-            number.setMinWidth(40);
+            ManguRuut = new StackPane();
+            ManguRuut.setId(Integer.toString(i));
 
-            mangulaud.add(number, veerg, rida);
+            Rectangle Ruut = new Rectangle(ruuduLaius,ruuduKorgus);
+            Label RuuduNumber = new Label(Integer.toString(i));
+            RuuduNumber.setFont(Font.font("Verdana", 12));
+            RuuduNumber.setTextAlignment(TextAlignment.RIGHT);
+            //RuuduNumber.setStyle("-fx-border-color:red; -fx-background-color: Green;");
+            //RuuduNumber.setPadding(new Insets(10,0,0,10));
+
+            if (i%2==0){
+                Ruut.setFill(Color.BEIGE);
+            } else {
+                Ruut.setFill(Color.LIGHTGREEN);
+            }
+            ManguRuut.getChildren().addAll(Ruut, RuuduNumber);
+            ManguRuudustik.add(ManguRuut, veerg, rida);
 
             if (suundTagasi){
                 veerg--;
@@ -125,7 +153,7 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
                 veerg++;
             }
             if (i%10==0){
-                rida++;
+                rida--;
                 if (!suundTagasi) {
                     suundTagasi = true;
                     veerg--;
@@ -136,7 +164,24 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
             }
         }
 
-        return mangulaud;
+        //Loome mängulauale ümarate äärtega tausta
+        Rectangle ManguLauaTaust = new Rectangle(ManguLauaLaius+2.0, ManguLauaKorgus+2.0);
+        ManguLauaTaust.setArcHeight(20.0);
+        ManguLauaTaust.setArcWidth(20.0);
+        ManguLauaTaust.setFill(Color.AQUAMARINE);
+        ManguLauaTaust.setStroke(Color.BLACK);
+
+        //Loome mängulaua raami, et tausta ja ruudustikku koos hoida
+        AnchorPane ManguLauaRaam = new AnchorPane();
+        ManguLauaRaam.getChildren().addAll(ManguLauaTaust,ManguRuudustik);
+        ManguLauaRaam.setLeftAnchor(ManguRuudustik, ruuduLaius / 2);
+        ManguLauaRaam.setTopAnchor(ManguRuudustik, 1.0);
+
+        //Paneme mängulaua kokku
+        ManguLaud.getChildren().add(ManguLauaRaam);
+        ManguLaud.setPadding(new Insets(10));
+        GameBoard.setRight(ManguLaud);
+
     }
 
     @Override

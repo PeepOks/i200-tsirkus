@@ -32,7 +32,7 @@ public class taring {
         return (int)(Math.random()*6)+1;
     }
 
-    static int sammud () {
+    public int sammud () {
         boolean viskauuesti = true;
         int tulemus = 0;
         int vise = 0;
