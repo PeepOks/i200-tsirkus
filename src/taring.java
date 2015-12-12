@@ -4,27 +4,37 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import sun.plugin2.message.GetAppletMessage;
 
 /**
  * Created by peep on 16.10.15.
  */
 public class taring {
-    private int TaringuNumber;
+    public int TaringuNumber;
     String TaringuVarv;
 
-    public StackPane taring(){
+    public taring(){
+        TaringuNumber = TaringuNumber();
+
+        looTaring();
+    }
+
+    private void looTaring() {
         StackPane stack = new StackPane();
         Rectangle taringukuju = new Rectangle(30, 30, 50, 50);
+        taringukuju.setArcHeight(10.0);
+        taringukuju.setArcWidth(10.0);
+
         taringukuju.setFill(Color.RED);
 
         Text taringunumber = new Text();
         //Täringu sisu
-        taringunumber.setText(Integer.toString(TaringuNumber()));
+        taringunumber.setText(Integer.toString(TaringuNumber));
         taringunumber.setFill(Color.WHITE);
         taringunumber.setFont(Font.font("Verdana", 20));
         taringunumber.setTextAlignment(TextAlignment.RIGHT);
         stack.getChildren().addAll(taringukuju,taringunumber);
-        return stack;
+
     }
 
 

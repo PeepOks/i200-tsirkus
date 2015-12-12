@@ -1,12 +1,13 @@
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -14,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
+import java.lang.annotation.Inherited;
 
 public class Lauamang{
     Stage TsirkuseMang;
@@ -29,7 +32,6 @@ public class Lauamang{
         //Loome uue mänguvälja
         LooManguVali();
 
-
         //Lisame pealkirja Mänguväljale päisesse
         LooManguPais();
 
@@ -37,9 +39,79 @@ public class Lauamang{
         GameBoard.setLeft(LooVasakVali());
 
         //Lisame mänguvälja keskele mänguruudud. Parameetrina mänguruutude arv
-
         LooManguLaud(100);
 
+        KesMangivad();
+
+    }
+
+    private void KesMangivad() {
+        ObservableList mangijateList = FXCollections.observableArrayList();
+        ObservableList nupuVarviList = FXCollections.observableArrayList();
+
+        FlowPane taust = new FlowPane();
+        taust.setMaxHeight(250);
+        taust.setMaxWidth(330);
+        taust.setAlignment(Pos.CENTER);
+        taust.setStyle("-fx-background-color: white; -fx-border-color:black; -fx-border-radius:20;");
+
+        VBox MangijaSisestus = new VBox();
+        HBox MangijaInfo = new HBox();
+
+        VBox MangijaNimeKast = new VBox();
+        Label MangijaNimi = new Label("Sisesta mängija nimi");
+        TextField mangijaNimeInput = new TextField();
+        MangijaNimeKast.getChildren().addAll(MangijaNimi, mangijaNimeInput);
+
+        VBox MangijaNupuVarviKast = new VBox();
+        Label MangijaNupuVarv = new Label("Vali omale nupu värv");
+        nupuVarviList.addAll("Punane", "Sinine", "Kollane", "Must");
+        ComboBox nupuVarvid = new ComboBox(nupuVarviList);
+        nupuVarvid.setEditable(false);
+        nupuVarvid.setPromptText("Saada olevad värvid");
+        MangijaNupuVarviKast.getChildren().addAll(MangijaNupuVarv,nupuVarvid);
+
+        MangijaInfo.getChildren().addAll(MangijaNimeKast,MangijaNupuVarviKast);
+
+
+        // Toome välja kes mängivad
+        VBox mangijateNimekiri = new VBox();
+        Label kesMangivad = new Label("Mängijad:");
+        ListView nimeKiri = new ListView();
+        nimeKiri.setMaxHeight(taust.getMaxHeight()/2);
+        mangijateNimekiri.getChildren().addAll(kesMangivad,nimeKiri);
+
+        Button lisaMangija = new Button("Lisa mängija");
+        Button hakkameMangima = new Button("Hakkame mängima");
+
+        //Mida teeb hakkameMangima Nupp
+        hakkameMangima.setOnAction(event -> {
+            if (mangijateList.size()>0) {
+                Game.getChildren().remove(taust);
+            }
+        });
+        // Mida teeb lisaMangija nupp
+        lisaMangija.setOnAction(event -> {
+            String mangijaNimi = mangijaNimeInput.getText();
+            String nupuVarv = String.valueOf(nupuVarvid.getValue());
+
+            if (mangijaNimi.length()>0 && !nupuVarv.equals("null")) {
+                //loome uue mängija
+                System.out.println("Loome mängija nimega " + mangijaNimi);
+                new Mangija(mangijaNimi, nupuVarv);
+
+                mangijateList.add(mangijaNimi + " - " + nupuVarv);
+                nimeKiri.setItems(mangijateList);
+                nupuVarviList.remove(nupuVarv);
+                mangijaNimeInput.setText("");
+            }
+
+        });
+
+        //Lisame kõik elemendid kokku
+        MangijaSisestus.getChildren().addAll(MangijaInfo,lisaMangija,mangijateNimekiri,hakkameMangima);
+        taust.getChildren().add(MangijaSisestus);
+        Game.getChildren().addAll(taust);
     }
 
     private void LooManguPais() {

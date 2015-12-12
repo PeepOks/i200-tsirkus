@@ -13,6 +13,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 
+import java.util.Collection;
+
 
 public class tsirkus extends Application implements EventHandler<ActionEvent>{
 
@@ -20,7 +22,7 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         launch(args);
     }
     Stage TsirkuseMang;
-    StackPane Game;
+    public static StackPane Game;
     BorderPane GameBoard;
     GridPane ManguRuudustik;
     StackPane ManguRuut;
@@ -32,15 +34,11 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         TsirkuseMang = PrimaryStage;
         //Loome uue mänguvälja
         LooManguVali();
-
         //Lisame pealkirja Mänguväljale päisesse
         LooManguPais();
-
         //Lisame mänguvälja vasaku ääre kuhu tuleb nupud ja täringud
-        GameBoard.setLeft(LooVasakVali());
-
+        LooVasakVali();
         //Lisame mänguvälja keskele mänguruudud. Parameetrina mänguruutude arv
-
         LooManguLaud(100);
     }
 
@@ -79,7 +77,7 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         }); //akna sulgedes läheb programm kinni
     }
 
-    public Node LooVasakVali (){
+    public void LooVasakVali (){
     /* Loome vasaku välja */
         VBox VasakVali = new VBox();
         VasakVali.setSpacing(10);
@@ -89,31 +87,25 @@ public class tsirkus extends Application implements EventHandler<ActionEvent>{
         VeeretamisNupp.setText("Veereta Täringut");
         VeeretamisNupp.setOnAction(this);
         VasakVali.getChildren().add(VeeretamisNupp);
-        /*
-        veeretaNupp.setOnAction(new EventHandler<ActionEvent>() {
+
+        VeeretamisNupp.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle (ActionEvent e){
                 // Siia tegevus, kui nupp on vajutatud.
-                taringunumber.setText(Integer.toString(sammud()));
+                taring t = new taring();
             }
         });
-        */
 
+        //Täringuala
+        Rectangle taringuAla = new Rectangle(50, 50, 50, 50);
+        taringuAla.setFill(Color.WHITESMOKE);
 
-        //Täring
-        Rectangle taring = new Rectangle(30, 30, 50, 50);
-        taring.setFill(Color.WHITESMOKE);
+        VasakVali.getChildren().add(taringuAla);
 
         //Täringu sisu
-        Text taringunumber = new Text();
-        taringunumber.setText(Integer.toString(4));
-        taringunumber.setFill(Color.WHITE);
-        taringunumber.setFont(Font.font("Verdana", 20));
-        taringunumber.setTextAlignment(TextAlignment.RIGHT);
 
         //Lisame täringule sisu
-
         //Saadame Vasaku välja tagasi
-        return VasakVali;
+        GameBoard.setLeft(VasakVali);
     }
 
     private void LooManguLaud (int RuuteLaual) {
