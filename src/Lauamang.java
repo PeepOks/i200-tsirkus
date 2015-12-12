@@ -49,6 +49,7 @@ public class Lauamang{
         //Lisame mängijad
         KesMangivad();
 
+
     }
 
     private void KesMangivad() {
