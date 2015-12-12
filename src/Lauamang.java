@@ -22,6 +22,7 @@ public class Lauamang{
     BorderPane GameBoard;
     GridPane ManguRuudustik;
     StackPane ManguRuut;
+    Rectangle Ruut;
     static Rectangle TaringuRuut;
     static VBox NuppudeAla;
     double ManguLauaLaius = 600.0;
@@ -46,9 +47,7 @@ public class Lauamang{
         new taring();
 
         //Lisame mängijad
-        //KesMangivad();
-        Nupp.lisaNuppMangu("Kollane");
-
+        KesMangivad();
 
     }
 
@@ -203,9 +202,10 @@ public class Lauamang{
         boolean suundTagasi = false;
         for (int i=1; i<=RuuteLaual; i++){
             ManguRuut = new StackPane();
-            ManguRuut.setId(Integer.toString(i));
+            ManguRuut.setId("manguruut-"+Integer.toString(i));
 
-            Rectangle Ruut = new Rectangle(ruuduLaius,ruuduKorgus);
+            Ruut = new Rectangle(ruuduLaius,ruuduKorgus);
+            Ruut.setId("ruut-"+Integer.toString(i));
             Label RuuduNumber = new Label(Integer.toString(i));
             RuuduNumber.setFont(Font.font("Verdana", 12));
             RuuduNumber.setTextAlignment(TextAlignment.RIGHT);
