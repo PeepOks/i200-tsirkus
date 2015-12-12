@@ -1,44 +1,31 @@
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import sun.plugin2.message.GetAppletMessage;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+
 
 /**
  * Created by peep on 16.10.15.
  */
 public class taring {
+
+    private static Image number1 = new Image("pildid/taring-1.png");
+    private static ImagePattern taringNumber1 = new ImagePattern(number1);
+    private static Image number2 = new Image("pildid/taring-2.png");
+    private static ImagePattern taringNumber2 = new ImagePattern(number2);
+    private static Image number3 = new Image("pildid/taring-3.png");
+    private static ImagePattern taringNumber3 = new ImagePattern(number3);
+    private static Image number4 = new Image("pildid/taring-4.png");
+    private static ImagePattern taringNumber4 = new ImagePattern(number4);
+    private static Image number5 = new Image("pildid/taring-5.png");
+    private static ImagePattern taringNumber5 = new ImagePattern(number5);
+    private static Image number6 = new Image("pildid/taring-6.png");
+    private static ImagePattern taringNumber6 = new ImagePattern(number6);
+
     public int TaringuNumber;
-    String TaringuVarv;
-
     public taring(){
-        TaringuNumber = TaringuNumber();
-
-        looTaring();
+        kujutaTaringut(RandomTaringuNumber());
     }
 
-    private void looTaring() {
-        StackPane stack = new StackPane();
-        Rectangle taringukuju = new Rectangle(30, 30, 50, 50);
-        taringukuju.setArcHeight(10.0);
-        taringukuju.setArcWidth(10.0);
-
-        taringukuju.setFill(Color.RED);
-
-        Text taringunumber = new Text();
-        //Täringu sisu
-        taringunumber.setText(Integer.toString(TaringuNumber));
-        taringunumber.setFill(Color.WHITE);
-        taringunumber.setFont(Font.font("Verdana", 20));
-        taringunumber.setTextAlignment(TextAlignment.RIGHT);
-        stack.getChildren().addAll(taringukuju,taringunumber);
-
-    }
-
-
-    private static int TaringuNumber () {
+    private static int RandomTaringuNumber () {
         return (int)(Math.random()*6)+1;
     }
 
@@ -47,7 +34,7 @@ public class taring {
         int tulemus = 0;
         int vise = 0;
         while(viskauuesti) {
-            vise = TaringuNumber();
+            vise = RandomTaringuNumber();
             if (vise == 6) {
                 System.out.println("Viskasin täringul " + vise +  " ja saan uue viske :)");
                 tulemus = tulemus + vise;
@@ -61,5 +48,38 @@ public class taring {
         return tulemus;
     }
 
+    private static void kujutaTaringut(int taringuNumber){
+        switch (taringuNumber){
+            case 1:
+                System.out.println(taringuNumber);
+                Lauamang.TaringuRuut.setFill(taringNumber1);
+                break;
+            case 2:
+                System.out.println(taringuNumber);
+                Lauamang.TaringuRuut.setFill(taringNumber2);
+                break;
+            case 3:
+                System.out.println(taringuNumber);
+                Lauamang.TaringuRuut.setFill(taringNumber3);
+                break;
+            case 4:
+                System.out.println(taringuNumber);
+                Lauamang.TaringuRuut.setFill(taringNumber4);
+                break;
+            case 5:
+                System.out.println(taringuNumber);
+                Lauamang.TaringuRuut.setFill(taringNumber5);
+                break;
+            case 6:
+                System.out.println(taringuNumber);
+                Lauamang.TaringuRuut.setFill(taringNumber6);
+                break;
+        }
+    }
 
+    public static int veere() {
+        int taringuNumber = RandomTaringuNumber();
+        kujutaTaringut(taringuNumber);
+        return taringuNumber;
+    }
 }
