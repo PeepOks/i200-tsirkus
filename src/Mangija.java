@@ -6,10 +6,8 @@ public class Mangija {
     String nupuVarv;
     static Integer kaikudeArv;
 
-    public Mangija(String mangijaNimi, String temaNupuVarv) {
+    public Mangija(String mangijaNimi) {
         nimi = mangijaNimi;
-        nupuVarv = temaNupuVarv;
-        Nupp.lisaNuppMangu(nupuVarv);
     }
 
 

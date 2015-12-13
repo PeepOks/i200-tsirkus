@@ -20,8 +20,9 @@ public class Lauamang{
     Stage TsirkuseMang;
     StackPane Game;
     BorderPane GameBoard;
+    Integer ManguRuutudeArv=100;
     GridPane ManguRuudustik;
-    StackPane ManguRuut;
+    static StackPane[] ManguRuudud = new StackPane[100];
     Rectangle Ruut;
     static Rectangle TaringuRuut;
     static VBox NuppudeAla;
@@ -48,7 +49,6 @@ public class Lauamang{
 
         //Lisame mängijad
         KesMangivad();
-
 
     }
 
@@ -108,9 +108,11 @@ public class Lauamang{
                 //loome uue mängija
                 System.out.println("Loome mängija nimega " + mangijaNimi);
 
-                Mangija mangija = new Mangija(mangijaNimi, nupuVarv);
+                Mangija mangija = new Mangija(mangijaNimi);
+                Nupp nupp = new Nupp(nupuVarv);
+                nupp.mineLauale();
 
-                mangijateList.add(mangija.nimi + " - " + mangija.nupuVarv);
+                mangijateList.add(mangija.nimi + " - " + nupp.nupuVarv);
                 nimeKiri.setItems(mangijateList);
                 nupuVarviList.remove(nupuVarv);
                 mangijaNimeInput.setText("");
@@ -173,6 +175,7 @@ public class Lauamang{
         //Mida veeretamisNupp teeb
         VeeretamisNupp.setOnAction(event -> {
             Mangija.veeretaTaringut();
+
         });
 
         //Loome koha kuhu tuleb täring
@@ -202,8 +205,8 @@ public class Lauamang{
         int veerg = 1;
         boolean suundTagasi = false;
         for (int i=1; i<=RuuteLaual; i++){
-            ManguRuut = new StackPane();
-            ManguRuut.setId("manguruut-"+Integer.toString(i));
+            ManguRuudud[i-1] = new StackPane();
+            //ManguRuudud[i].setId("manguruut-"+Integer.toString(i));
 
             Ruut = new Rectangle(ruuduLaius,ruuduKorgus);
             Ruut.setId("ruut-"+Integer.toString(i));
@@ -218,15 +221,17 @@ public class Lauamang{
             } else {
                 Ruut.setFill(Color.LIGHTGREEN);
             }
-            ManguRuut.getChildren().addAll(Ruut, RuuduNumber);
-            ManguRuudustik.add(ManguRuut, veerg, rida);
+
+            ManguRuudud[i-1].getChildren().addAll(Ruut, RuuduNumber);
+            ManguRuudustik.add(ManguRuudud[i-1],veerg,rida);
+
 
             if (suundTagasi){
                 veerg--;
             } else {
                 veerg++;
             }
-            if (i%10==0){
+            if ((i)%10==0){
                 rida--;
                 if (!suundTagasi) {
                     suundTagasi = true;

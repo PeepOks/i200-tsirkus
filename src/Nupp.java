@@ -14,8 +14,49 @@ public class Nupp {
     private static ImagePattern roheliseNupuPilt = new ImagePattern(roheline);
     private static Image sinine = new Image("pildid/sinine.gif");
     private static ImagePattern siniseNupuPilt = new ImagePattern(sinine);
-    private static int nupuKorgus = 40;
-    private static int nupuLaius = 25;
+    private static int nupuKorgus = 25;
+    private static int nupuLaius = 15;
+    String nupuVarv;
+    Rectangle nupp;
+
+    public Nupp(String varvus){
+        nupuVarv = varvus;
+        looNupp(nupuVarv);
+
+    };
+
+    private Rectangle looNupp(String varv){
+        if (varv.toLowerCase().equals("punane")){
+            System.out.println("Lisame " + varv + " nupu");
+            nupp = new Rectangle();
+            nupp.setHeight(nupuKorgus);
+            nupp.setWidth(nupuLaius);
+            nupp.setFill(punaseNupuPilt);
+            return nupp;
+        } else if (varv.toLowerCase().equals("kollane")){
+            System.out.println("Lisame " + varv + " nupu");
+            nupp = new Rectangle();
+            nupp.setHeight(nupuKorgus);
+            nupp.setWidth(nupuLaius);
+            nupp.setFill(kollaseNupuPilt);
+            return nupp;
+        } else if (varv.toLowerCase().equals("roheline")){
+            System.out.println("Lisame " + varv + " nupu");
+            nupp = new Rectangle();
+            nupp.setHeight(nupuKorgus);
+            nupp.setWidth(nupuLaius);
+            nupp.setFill(roheliseNupuPilt);
+            return nupp;
+        } else if (varv.toLowerCase().equals("sinine")){
+            System.out.println("Lisame " + varv + " nupu");
+            nupp = new Rectangle();
+            nupp.setHeight(nupuKorgus);
+            nupp.setWidth(nupuLaius);
+            nupp.setFill(siniseNupuPilt);
+            return nupp;
+        }
+        return null;
+    }
 
     public static void lisaNuppMangu(String varv) {
         switch (varv) {
@@ -53,5 +94,15 @@ public class Nupp {
                 break;
         }
 
+    }
+
+    public void mineRuudule(int ruuduNumber) {
+        System.out.println("Nupp läheb ruudule" + ruuduNumber);
+        Lauamang.ManguRuudud[ruuduNumber-1].getChildren().add(this.nupp);
+    }
+
+    public void mineLauale() {
+        System.out.println("Nupp läheb mängulauale");
+        Lauamang.NuppudeAla.getChildren().add(this.nupp);
     }
 }
