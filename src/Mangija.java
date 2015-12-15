@@ -4,10 +4,14 @@
 public class Mangija {
     String nimi;
     String nupuVarv;
-    static Integer kaikudeArv;
+    Nupp manguNupp;
+    static Integer kaikudeArv=0;
 
-    public Mangija(String mangijaNimi) {
+    public Mangija(String mangijaNimi, String varvus) {
         nimi = mangijaNimi;
+        nupuVarv = varvus;
+        manguNupp = new Nupp(nupuVarv);
+        manguNupp.mineLauale();
     }
 
 

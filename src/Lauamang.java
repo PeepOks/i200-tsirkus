@@ -20,10 +20,13 @@ public class Lauamang{
     Stage TsirkuseMang;
     StackPane Game;
     BorderPane GameBoard;
-    Integer ManguRuutudeArv=100;
     GridPane ManguRuudustik;
-    static StackPane[] ManguRuudud = new StackPane[100];
     Rectangle Ruut;
+    private static Integer ManguRuutudeArv=100;
+    static StackPane[] ManguRuudud = new StackPane[ManguRuutudeArv];
+    private static Integer MangijateArv = 4;
+    static Mangija[] Mangijad = new Mangija[MangijateArv];
+
     static Rectangle TaringuRuut;
     static VBox NuppudeAla;
     double ManguLauaLaius = 600.0;
@@ -48,7 +51,14 @@ public class Lauamang{
         new taring();
 
         //Lisame mängijad
-        KesMangivad();
+        //KesMangivad();
+        Mangijad[0] = new Mangija("Peep", "Punane");
+        Mangijad[1] = new Mangija("Kaspar", "Kollane");
+
+        Mangijad[0].veeretaTaringut();
+        System.out.println("Mangija käikude arv" + Mangijad[0].kaikudeArv);
+
+
 
     }
 
@@ -97,6 +107,7 @@ public class Lauamang{
         hakkameMangima.setOnAction(event -> {
             if (mangijateList.size()>0) {
                 Game.getChildren().remove(taust);
+
             }
         });
         // Mida teeb lisaMangija nupp
@@ -108,11 +119,11 @@ public class Lauamang{
                 //loome uue mängija
                 System.out.println("Loome mängija nimega " + mangijaNimi);
 
-                Mangija mangija = new Mangija(mangijaNimi);
-                Nupp nupp = new Nupp(nupuVarv);
-                nupp.mineLauale();
+                //Mangija mangija = new Mangija(mangijaNimi);
+                //Nupp nupp = new Nupp(nupuVarv);
+                //nupp.mineLauale();
 
-                mangijateList.add(mangija.nimi + " - " + nupp.nupuVarv);
+                //mangijateList.add(mangija.nimi + " - " + nupp.nupuVarv);
                 nimeKiri.setItems(mangijateList);
                 nupuVarviList.remove(nupuVarv);
                 mangijaNimeInput.setText("");

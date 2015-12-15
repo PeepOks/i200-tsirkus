@@ -105,4 +105,8 @@ public class Nupp {
         System.out.println("Nupp läheb mängulauale");
         Lauamang.NuppudeAla.getChildren().add(this.nupp);
     }
+
+    public void mineAlgusesse() {
+        Lauamang.ManguRuudud[1].getChildren().add(this.nupp);
+    }
 }
