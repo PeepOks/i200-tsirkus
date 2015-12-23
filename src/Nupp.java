@@ -97,7 +97,7 @@ public class Nupp {
     }
 
     public void mineRuudule(int ruuduNumber) {
-        System.out.println("Nupp läheb ruudule" + ruuduNumber);
+        System.out.println("Nupp läheb ruudule " + ruuduNumber);
         Lauamang.ManguRuudud[ruuduNumber-1].getChildren().add(this.nupp);
     }
 

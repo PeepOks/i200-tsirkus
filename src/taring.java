@@ -51,27 +51,21 @@ public class taring {
     private static void kujutaTaringut(int taringuNumber){
         switch (taringuNumber){
             case 1:
-                System.out.println(taringuNumber);
                 Lauamang.TaringuRuut.setFill(taringNumber1);
                 break;
             case 2:
-                System.out.println(taringuNumber);
                 Lauamang.TaringuRuut.setFill(taringNumber2);
                 break;
             case 3:
-                System.out.println(taringuNumber);
                 Lauamang.TaringuRuut.setFill(taringNumber3);
                 break;
             case 4:
-                System.out.println(taringuNumber);
                 Lauamang.TaringuRuut.setFill(taringNumber4);
                 break;
             case 5:
-                System.out.println(taringuNumber);
                 Lauamang.TaringuRuut.setFill(taringNumber5);
                 break;
             case 6:
-                System.out.println(taringuNumber);
                 Lauamang.TaringuRuut.setFill(taringNumber6);
                 break;
         }

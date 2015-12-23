@@ -4,8 +4,12 @@
 public class Mangija {
     String nimi;
     String nupuVarv;
-    Nupp manguNupp;
-    static Integer kaikudeArv=0;
+    private Nupp manguNupp;
+    static Integer sammudeArv=0;
+    private Integer nupuasukoht=0;
+
+    public boolean onTaringutVeeretanud=false;
+    public boolean onNuppuLiigutanud=false;
 
     public Mangija(String mangijaNimi, String varvus) {
         nimi = mangijaNimi;
@@ -14,8 +18,30 @@ public class Mangija {
         manguNupp.mineLauale();
     }
 
-
     public static void veeretaTaringut() {
-        kaikudeArv = taring.veere();
+        sammudeArv = taring.veere();
+    }
+
+    public void liigutaNuppuEdasi(int kaikudearv) {
+        nupuasukoht = nupuasukoht + kaikudearv;
+
+        if (nupuasukoht > Lauamang.ManguRuutudeArv){
+            manguNupp.mineRuudule(Lauamang.ManguRuutudeArv);
+            nupuasukoht = Lauamang.ManguRuutudeArv - (nupuasukoht - Lauamang.ManguRuutudeArv);
+            manguNupp.mineRuudule(nupuasukoht);
+        } else if(nupuasukoht == Lauamang.ManguRuutudeArv){
+            manguNupp.mineRuudule(nupuasukoht);
+            Lauamang.mangLabi=true;
+            System.out.println("Mang sai läbi");
+        } else {
+            System.out.println("Nupp liigutatakse positsioonile " + nupuasukoht);
+            manguNupp.mineRuudule(nupuasukoht);
+        }
+
+    }
+
+    public void liigutaNuppAlgusesse() {
+        nupuasukoht = 1;
+        manguNupp.mineRuudule(nupuasukoht);
     }
 }
