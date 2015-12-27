@@ -5,7 +5,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Lauamang tsirk = new Lauamang();
+        new Lauamang();
 
     }
 }

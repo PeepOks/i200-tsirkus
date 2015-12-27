@@ -58,51 +58,14 @@ public class Nupp {
         return null;
     }
 
-    public static void lisaNuppMangu(String varv) {
-        switch (varv) {
-            case "Punane":
-                System.out.println("Lisame " + varv + " nupu");
-                Rectangle punaseNupuRuut = new Rectangle();
-                punaseNupuRuut.setHeight(nupuKorgus);
-                punaseNupuRuut.setWidth(nupuLaius);
-                punaseNupuRuut.setFill(punaseNupuPilt);
-                Lauamang.NuppudeAla.getChildren().add(punaseNupuRuut);
-                break;
-            case "Roheline":
-                System.out.println("Lisame " + varv + " nupu");
-                Rectangle roheliseNupuRuut = new Rectangle();
-                roheliseNupuRuut.setHeight(nupuKorgus);
-                roheliseNupuRuut.setWidth(nupuLaius);
-                roheliseNupuRuut.setFill(roheliseNupuPilt);
-                Lauamang.NuppudeAla.getChildren().add(roheliseNupuRuut);
-                break;
-            case "Kollane":
-                System.out.println("Lisame " + varv + " nupu");
-                Rectangle kollaseNupuRuut = new Rectangle();
-                kollaseNupuRuut.setHeight(nupuKorgus);
-                kollaseNupuRuut.setWidth(nupuLaius);
-                kollaseNupuRuut.setFill(kollaseNupuPilt);
-                Lauamang.NuppudeAla.getChildren().add(kollaseNupuRuut);
-                break;
-            case "Sinine":
-                System.out.println("Lisame " + varv + " nupu");
-                Rectangle siniseNupuRuut = new Rectangle();
-                siniseNupuRuut.setHeight(nupuKorgus);
-                siniseNupuRuut.setWidth(nupuLaius);
-                siniseNupuRuut.setFill(siniseNupuPilt);
-                Lauamang.NuppudeAla.getChildren().add(siniseNupuRuut);
-                break;
-        }
-
-    }
-
     public void mineRuudule(int ruuduNumber) {
-        System.out.println("Nupp läheb ruudule " + ruuduNumber);
+        //System.out.println("Nupp läheb ruudule " + ruuduNumber);
+
         Lauamang.ManguRuudud[ruuduNumber-1].getChildren().add(this.nupp);
     }
 
     public void mineLauale() {
-        System.out.println("Nupp läheb mängulauale");
+        //System.out.println("Nupp läheb mängulauale");
         Lauamang.NuppudeAla.getChildren().add(this.nupp);
     }
 

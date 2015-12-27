@@ -1,10 +1,6 @@
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
-
-/**
- * Created by peep on 16.10.15.
- */
 public class taring {
 
     private static Image number1 = new Image("pildid/taring-1.png");
@@ -20,7 +16,6 @@ public class taring {
     private static Image number6 = new Image("pildid/taring-6.png");
     private static ImagePattern taringNumber6 = new ImagePattern(number6);
 
-    public int TaringuNumber;
     public taring(){
         kujutaTaringut(RandomTaringuNumber());
     }

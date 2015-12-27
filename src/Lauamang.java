@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -18,6 +19,10 @@ import javafx.stage.Stage;
 
 import java.lang.annotation.Inherited;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import static javafx.geometry.Pos.CENTER;
 
 public class Lauamang extends ActionEvent{
 
@@ -26,17 +31,16 @@ public class Lauamang extends ActionEvent{
     BorderPane GameBoard;
     GridPane ManguRuudustik;
     Rectangle Ruut;
-    static Integer ManguRuutudeArv=20;
+    static Integer ManguRuutudeArv=120;
     static StackPane[] ManguRuudud = new StackPane[ManguRuutudeArv];
 
-    static ArrayList<Mangija> Mangijad = new ArrayList<Mangija>();
-    private Integer MangijateArv;
+    static ArrayList<Mangija> Mangijad = new ArrayList<>();
     private Integer MangijaNumber;
 
     static Rectangle TaringuRuut;
     static VBox NuppudeAla;
-    double ManguLauaLaius = 600.0;
-    double ManguLauaKorgus = 350.0;
+    double ManguLauaLaius = 450.0;
+    double ManguLauaKorgus = 420.0;
     static boolean mangLabi = false;
 
     private Button VeeretamisNupp;
@@ -44,6 +48,9 @@ public class Lauamang extends ActionEvent{
     private Button JargmineMangija;
 
     private Label Info;
+
+    static HashMap<Integer, Integer> Redelid;
+    static HashMap<Integer, Integer> Ussid;
 
     public Lauamang(){
         TsirkuseMang = new Stage();
@@ -60,10 +67,7 @@ public class Lauamang extends ActionEvent{
         LooManguJalus();
 
         //Lisame mänguväljaku keskele mänguruudud. Parameetrina mänguruutude arv
-        LooManguLaud(ManguRuutudeArv);
-
-        //Lisame kohe mängulauale täringu
-        new taring();
+        LooManguLaud();
 
         //Lisame mängijad
         //KesMangivad();
@@ -88,14 +92,11 @@ public class Lauamang extends ActionEvent{
         LiikumisNupp.setDisable(true);
         JargmineMangija.setDisable(true);
 
-        //Mitu mängijat meil on
-        MangijateArv = Mangijad.size();
-
         //Alustab 1. mängija
         MangijaNumber = 0;
 
-        //Kõik nupud lähevad mängulaua algusesse
-        if (Mangijad.get(MangijaNumber).sammudeArv==0){
+        //Kui nupp pole mängus siis läheb mängulaua algusesse
+        if (Mangijad.get(MangijaNumber).nupuasukoht==0){
             Mangijad.get(MangijaNumber).liigutaNuppAlgusesse();
         }
 
@@ -110,7 +111,7 @@ public class Lauamang extends ActionEvent{
         taust.setMaxHeight(300);
         taust.setMaxWidth(330);
         taust.setPadding(new Insets(10));
-        taust.setAlignment(Pos.CENTER);
+        taust.setAlignment(CENTER);
         taust.setStyle("-fx-background-color: white; -fx-border-color:black; -fx-border-radius:20;");
 
         VBox mangijaSisestus = new VBox();
@@ -183,7 +184,7 @@ public class Lauamang extends ActionEvent{
         Info.setTextAlignment(TextAlignment.JUSTIFY);
         Info.setMinHeight(100);
         Info.setPrefWidth(Double.MAX_VALUE);
-        Info.setAlignment(Pos.CENTER);
+        Info.setAlignment(CENTER);
         Info.setStyle("-fx-background-color: green");
 
         GameBoard.setTop(Info);
@@ -193,14 +194,6 @@ public class Lauamang extends ActionEvent{
         HBox nupud = new HBox();
         nupud.setPadding(new Insets(10));
         nupud.setSpacing(10);
-
-        //Loome mangu alustamise nupu
-        Button AlustamisNupp = new Button("Alusta Manguga");
-        AlustamisNupp.setOnAction(event1 -> {
-            Mangime();
-            AlustamisNupp.setVisible(false);
-        });
-
 
         /*Loome Veeretamise nupu*/
         VeeretamisNupp = new Button();
@@ -217,34 +210,33 @@ public class Lauamang extends ActionEvent{
         //Loome edasiliikumise nupu
         LiikumisNupp = new Button("Liiguta Nuppu");
         LiikumisNupp.setOnAction(event -> {
-
             System.out.println("Mangija " + Mangijad.get(MangijaNumber).nimi + " saab liikuda edasi " + Mangijad.get(MangijaNumber).sammudeArv + " sammu");
             Mangijad.get(MangijaNumber).liigutaNuppuEdasi(Mangijad.get(MangijaNumber).sammudeArv);
-            Mangijad.get(MangijaNumber).onNuppuLiigutanud = true;
-            JargmineMangija.setDisable(false);
-            LiikumisNupp.setDisable(true);
-            /*
-            if (Mangijad.get(MangijaNumber).onTaringutVeeretanud==true && Mangijad.get(MangijaNumber).onNuppuLiigutanud==false){
-            } else if (Mangijad.get(MangijaNumber).onTaringutVeeretanud==true && Mangijad.get(MangijaNumber).onNuppuLiigutanud==true){
-                System.out.println("Sinu kord on läbi. Järgmine mängija");
-            } else {
-                System.out.println(Mangijad.get(MangijaNumber).nimi + " pole veel taringut veeretanud!!!");
-            }*/
 
+            if (Mangijad.get(MangijaNumber).sammudeArv == 6) {
+                Info.setText(Mangijad.get(MangijaNumber).nimi + " saab veel veeretada.");
+                VeeretamisNupp.setDisable(false);
+                LiikumisNupp.setDisable(true);
+            } else {
+                JargmineMangija.setDisable(false);
+                LiikumisNupp.setDisable(true);
+            }
         });
 
         //Loome nupu mängija vahetamiseks
         JargmineMangija = new Button("Järgmine mängija");
         JargmineMangija.setOnAction(event -> {
-            if (MangijaNumber == MangijateArv-1){
+            if (MangijaNumber == Mangijad.size()-1){
                 MangijaNumber = 0;
             } else {
                 MangijaNumber++;
             }
-            if (Mangijad.get(MangijaNumber).sammudeArv==0) {
+            //Kui nupp pole mängus siis läheb mängulaua algusesse
+            if (Mangijad.get(MangijaNumber).nupuasukoht==0){
                 Mangijad.get(MangijaNumber).liigutaNuppAlgusesse();
             }
             Info.setText(Mangijad.get(MangijaNumber).nimi + ", sinu kord on veeretada täringut.");
+
             JargmineMangija.setDisable(true);
             VeeretamisNupp.setDisable(false);
         });
@@ -261,7 +253,7 @@ public class Lauamang extends ActionEvent{
         Game.setStyle("-fx-background-color: brown;");
         //Loome Mängulaua
         GameBoard = new BorderPane();
-        GameBoard.setMinSize(800, 600);
+        GameBoard.setMinSize(650, 600);
         Game.getChildren().add(GameBoard);
 
         Scene scene = new Scene(Game);
@@ -296,37 +288,49 @@ public class Lauamang extends ActionEvent{
         GameBoard.setLeft(VasakVali);
     }
 
-    private void LooManguLaud (int RuuteLaual) {
+    private void LooManguLaud () {
         // Teeb sobiva mängulaua
         StackPane ManguLaud = new StackPane();
 
+
         //Loome mänguruudustiku
-        double ruuduLaius = ManguLauaLaius/11;
-        double ruuduKorgus = ManguLauaKorgus/10;
         ManguRuudustik = new GridPane();
-        ManguRuudustik.setGridLinesVisible(true);
-        int rida = 10;
+        ManguRuudustik.setPrefSize(ManguLauaLaius,ManguLauaKorgus);
+        ManguRuudustik.setGridLinesVisible(false);
+        ManguRuudustik.setHgap(3);
+        ManguRuudustik.setVgap(3);
+
+
+        double ruuduLaius = (ManguLauaLaius-(ManguRuudustik.getHgap()*11))/10;
+        double ruuduKorgus = (ManguLauaKorgus-(ManguRuudustik.getVgap()*13))/(ManguRuutudeArv/10);
+
+        System.out.println("Laius " + ruuduLaius);
+        System.out.println("Korgus " + ruuduKorgus);
+        int rida = ManguRuutudeArv/10;
         int veerg = 1;
         boolean suundTagasi = false;
-        for (int i=1; i<=RuuteLaual; i++){
+        for (int i=1; i<=ManguRuutudeArv; i++){
             ManguRuudud[i-1] = new StackPane();
             //ManguRuudud[i].setId("manguruut-"+Integer.toString(i));
 
             Ruut = new Rectangle(ruuduLaius,ruuduKorgus);
             Ruut.setId("ruut-"+Integer.toString(i));
-            Label RuuduNumber = new Label(Integer.toString(i));
-            RuuduNumber.setFont(Font.font("Verdana", 12));
-            RuuduNumber.setTextAlignment(TextAlignment.RIGHT);
+            Ruut.setOpacity(0);
+            //Label RuuduNumber = new Label(Integer.toString(i));
+            //RuuduNumber.setFont(Font.font("Verdana", 12));
+            //RuuduNumber.setTextAlignment(TextAlignment.RIGHT);
             //RuuduNumber.setStyle("-fx-border-color:red; -fx-background-color: Green;");
             //RuuduNumber.setPadding(new Insets(10,0,0,10));
 
+            //Värvime ruudu tausta
+            /*
             if (i%2==0){
                 Ruut.setFill(Color.BEIGE);
             } else {
                 Ruut.setFill(Color.LIGHTGREEN);
             }
-
-            ManguRuudud[i-1].getChildren().addAll(Ruut, RuuduNumber);
+            */
+            ManguRuudud[i-1].getChildren().addAll(Ruut);
             ManguRuudustik.add(ManguRuudud[i-1],veerg,rida);
 
             if (suundTagasi){
@@ -347,22 +351,53 @@ public class Lauamang extends ActionEvent{
         }
 
         //Loome mängulauale ümarate äärtega tausta
-        Rectangle ManguLauaTaust = new Rectangle(ManguLauaLaius+2.0, ManguLauaKorgus+2.0);
+        ImagePattern taust = new ImagePattern(new Image("pildid/laua-taust.png"));
+        Rectangle ManguLauaTaust = new Rectangle(ManguLauaLaius, ManguLauaKorgus);
         ManguLauaTaust.setArcHeight(20.0);
         ManguLauaTaust.setArcWidth(20.0);
-        ManguLauaTaust.setFill(Color.AQUAMARINE);
-        ManguLauaTaust.setStroke(Color.BLACK);
+        ManguLauaTaust.setFill(taust);
 
-        //Loome mängulaua raami, et tausta ja ruudustikku koos hoida
-        AnchorPane ManguLauaRaam = new AnchorPane();
-        ManguLauaRaam.getChildren().addAll(ManguLauaTaust,ManguRuudustik);
-        AnchorPane.setLeftAnchor(ManguRuudustik, ruuduLaius / 2);
-        AnchorPane.setTopAnchor(ManguRuudustik, 1.0);
 
-        //Paneme mängulaua kokku
-        ManguLaud.getChildren().add(ManguLauaRaam);
-        ManguLaud.setPadding(new Insets(10));
+        ManguLaud.getChildren().addAll(ManguLauaTaust, ManguRuudustik);
+        ManguLaud.setPadding(new Insets(15));
         GameBoard.setRight(ManguLaud);
 
+        //Lisame mängu täringu
+        new taring();
+        // Lisame uusid ja redelid mangulauale
+        LooUssidJaRedelid();
+
+    }
+
+    private void LooUssidJaRedelid() {
+        //Loome redelite asukohad
+        Redelid = new HashMap<>();
+        Redelid.put(3,37);
+        Redelid.put(5,15);
+        Redelid.put(14,34);
+        Redelid.put(21,42);
+        Redelid.put(31,50);
+        Redelid.put(38,43);
+        Redelid.put(47,92);
+        Redelid.put(57,66);
+        Redelid.put(60,81);
+        Redelid.put(74,86);
+        Redelid.put(87,108);
+        Redelid.put(95,115);
+
+        //Loome usside asukohad
+        Ussid = new HashMap<>();
+        Ussid.put(20,2);
+        Ussid.put(30,10);
+        Ussid.put(35,25);
+        Ussid.put(48,28);
+        Ussid.put(55,45);
+        Ussid.put(70,52);
+        Ussid.put(85,59);
+        Ussid.put(103,82);
+        Ussid.put(109,88);
+        Ussid.put(113,107);
+        Ussid.put(117,97);
+        Ussid.put(119,103);
     }
 }
