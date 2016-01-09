@@ -17,47 +17,50 @@ public class Mangija {
     }
 
     public void liigutaNuppuEdasi(int kaikudearv) {
-        System.out.println("Nupu asukoht oli alguses " + nupuasukoht);
+        //Saame uue nupu asukoha
         nupuasukoht = nupuasukoht + kaikudearv;
-        System.out.println("Nupp peaks minema ruudule " + nupuasukoht);
-
-        //Otsime kas on kas nupu uues asukohas on usse või redeleid
-        if(Lauamang.Redelid.containsKey(nupuasukoht)){
-            System.out.println("Siin on redel ja lähme ruudule " + Lauamang.Redelid.get(nupuasukoht));
-            nupuasukoht = Lauamang.Redelid.get(nupuasukoht);
-        } else if (Lauamang.Ussid.containsKey(nupuasukoht)){
-            System.out.println("Siin on uss ja lähme ruudule " + Lauamang.Ussid.get(nupuasukoht));
-            nupuasukoht = Lauamang.Ussid.get(nupuasukoht);
-        }
-
-        //Kontrollime kas see ruut on vaba ja vajadusel saame uue asukoha kuhu minna
-        nupuasukoht = kasManguRuutOnVaba(nupuasukoht);
+        //Otsime kas on kas nupu uues asukohas on usse või redeleid või muid takistusi.
+        nupuasukoht = kasManguruudulOnTakistusi(nupuasukoht);
 
         if (nupuasukoht > Lauamang.ManguRuutudeArv){
             manguNupp.mineRuudule(Lauamang.ManguRuutudeArv);
             nupuasukoht = Lauamang.ManguRuutudeArv - (nupuasukoht - Lauamang.ManguRuutudeArv);
+            //teeme uuesti kontrollid
+            nupuasukoht = kasManguruudulOnTakistusi(nupuasukoht);
+
+            //Liigume vabale ruudule
             manguNupp.mineRuudule(nupuasukoht);
         } else if(nupuasukoht == Lauamang.ManguRuutudeArv){
             manguNupp.mineRuudule(nupuasukoht);
-            Lauamang.mangLabi=true;
+            Lauamang.mangSaiLabi();
             System.out.println("Mang sai läbi");
         } else {
-            System.out.println("Nupp liigutatakse positsioonile " + nupuasukoht);
+            //System.out.println("Nupp liigutatakse positsioonile " + nupuasukoht);
             manguNupp.mineRuudule(nupuasukoht);
         }
 
     }
 
-    private Integer kasManguRuutOnVaba(Integer nupuasukoht) {
-            for (int i = 0; i < Lauamang.Mangijad.size(); i++) {
-                if (Lauamang.Mangijad.get(i).nupuasukoht == nupuasukoht && !this.nupuVarv.equals(Lauamang.Mangijad.get(i).nupuVarv)){
-                    System.out.println("Keegi on juba sellel ruudul");
-                    nupuasukoht--;
-                } else if ( nupuasukoht == 1) {
-                    break;
-                }
+    private Integer kasManguruudulOnTakistusi(Integer nupuasukoht) {
+        int uusNupuAsukoht = nupuasukoht;
+        if(Lauamang.Redelid.containsKey(nupuasukoht)){
+            //System.out.println("Siin on redel ja lähme ruudule " + Lauamang.Redelid.get(nupuasukoht));
+            uusNupuAsukoht = Lauamang.Redelid.get(nupuasukoht);
+            return uusNupuAsukoht;
+        } else if (Lauamang.Ussid.containsKey(nupuasukoht)){
+            //System.out.println("Siin on uss ja lähme ruudule " + Lauamang.Ussid.get(nupuasukoht));
+            uusNupuAsukoht = Lauamang.Ussid.get(nupuasukoht);
+            return uusNupuAsukoht;
+        }
+        for (int i = 0; i < Lauamang.Mangijad.size(); i++) {
+            if (Lauamang.Mangijad.get(i).nupuasukoht == nupuasukoht && !this.nupuVarv.equals(Lauamang.Mangijad.get(i).nupuVarv)){
+                //System.out.println("Keegi on juba sellel ruudul");
+                uusNupuAsukoht--;
+            } else if ( nupuasukoht == 1) {
+                break;
             }
-        return nupuasukoht;
+        }
+        return uusNupuAsukoht;
     }
 
     public void liigutaNuppAlgusesse() {

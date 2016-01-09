@@ -24,25 +24,6 @@ public class taring {
         return (int)(Math.random()*6)+1;
     }
 
-    public int sammud () {
-        boolean viskauuesti = true;
-        int tulemus = 0;
-        int vise = 0;
-        while(viskauuesti) {
-            vise = RandomTaringuNumber();
-            if (vise == 6) {
-                System.out.println("Viskasin täringul " + vise +  " ja saan uue viske :)");
-                tulemus = tulemus + vise;
-                viskauuesti = true;
-            } else {
-                System.out.println("Viskasin täringul " + vise);
-                tulemus = tulemus + vise;
-                viskauuesti = false;
-            }
-        }
-        return tulemus;
-    }
-
     private static void kujutaTaringut(int taringuNumber){
         switch (taringuNumber){
             case 1:

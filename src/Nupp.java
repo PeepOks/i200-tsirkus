@@ -14,8 +14,8 @@ public class Nupp {
     private static ImagePattern roheliseNupuPilt = new ImagePattern(roheline);
     private static Image sinine = new Image("pildid/sinine.gif");
     private static ImagePattern siniseNupuPilt = new ImagePattern(sinine);
-    private static int nupuKorgus = 25;
-    private static int nupuLaius = 15;
+    private static int nupuKorgus = 30;
+    private static int nupuLaius = 20;
     String nupuVarv;
     Rectangle nupp;
 
@@ -27,28 +27,28 @@ public class Nupp {
 
     private Rectangle looNupp(String varv){
         if (varv.toLowerCase().equals("punane")){
-            System.out.println("Lisame " + varv + " nupu");
+            //System.out.println("Lisame " + varv + " nupu");
             nupp = new Rectangle();
             nupp.setHeight(nupuKorgus);
             nupp.setWidth(nupuLaius);
             nupp.setFill(punaseNupuPilt);
             return nupp;
         } else if (varv.toLowerCase().equals("kollane")){
-            System.out.println("Lisame " + varv + " nupu");
+            //System.out.println("Lisame " + varv + " nupu");
             nupp = new Rectangle();
             nupp.setHeight(nupuKorgus);
             nupp.setWidth(nupuLaius);
             nupp.setFill(kollaseNupuPilt);
             return nupp;
         } else if (varv.toLowerCase().equals("roheline")){
-            System.out.println("Lisame " + varv + " nupu");
+            //System.out.println("Lisame " + varv + " nupu");
             nupp = new Rectangle();
             nupp.setHeight(nupuKorgus);
             nupp.setWidth(nupuLaius);
             nupp.setFill(roheliseNupuPilt);
             return nupp;
         } else if (varv.toLowerCase().equals("sinine")){
-            System.out.println("Lisame " + varv + " nupu");
+            //System.out.println("Lisame " + varv + " nupu");
             nupp = new Rectangle();
             nupp.setHeight(nupuKorgus);
             nupp.setWidth(nupuLaius);
