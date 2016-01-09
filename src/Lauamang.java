@@ -92,7 +92,7 @@ public class Lauamang{
         Info.setText(Mangijad.get(MangijaNumber).nimi + " palun veereta täringut");
     }
 
-    public void mangSaiLabi() {
+    public static void mangSaiLabi() {
         Info.setText("Mängu võitis " + Mangijad.get(MangijaNumber).nimi);
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
         FlowPane teavitus = new FlowPane();
