@@ -1,13 +1,8 @@
 import com.sun.javafx.tk.FontLoader;
 import com.sun.javafx.tk.Toolkit;
-import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import javafx.event.ActionEvent;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,20 +10,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import sun.plugin2.message.GetAppletMessage;
-
-import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
-import static javafx.geometry.Pos.CENTER;
 
 public class Lauamang{
     static Stage TsirkuseMang;
@@ -104,11 +92,11 @@ public class Lauamang{
         Info.setText(Mangijad.get(MangijaNumber).nimi + " palun veereta täringut");
     }
 
-    public static void mangSaiLabi() {
+    public void mangSaiLabi() {
         Info.setText("Mängu võitis " + Mangijad.get(MangijaNumber).nimi);
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
         FlowPane teavitus = new FlowPane();
-        teavitus.setAlignment(CENTER);
+        teavitus.setAlignment(Pos.CENTER);
 
         VBox sisuKast = new VBox();
         sisuKast.setSpacing(50);
@@ -127,7 +115,7 @@ public class Lauamang{
 
         HBox teavituseNupud = new HBox();
         teavituseNupud.setSpacing(20);
-        teavituseNupud.setAlignment(CENTER);
+        teavituseNupud.setAlignment(Pos.CENTER);
         Button uusMang = new Button("Uus mäng");
         uusMang.setOnAction(event -> {
             new Lauamang();
@@ -154,7 +142,7 @@ public class Lauamang{
         ObservableList nupuVarviList = FXCollections.observableArrayList();
 
         FlowPane taustaRaam = new FlowPane();
-        taustaRaam.setAlignment(CENTER);
+        taustaRaam.setAlignment(Pos.CENTER);
 
         Rectangle taust = new Rectangle(370,300);
         taust.setArcWidth(20);
@@ -231,11 +219,11 @@ public class Lauamang{
         //Loome mänguväljale Pealkijra
         Info = new Label("Tsirkuse Mäng");
         Info.setTextFill(Color.YELLOW);
-        Info.setFont(Font.font("Verdana", 30));
+        Info.setFont(Font.font("Verdana", 25));
         Info.setTextAlignment(TextAlignment.JUSTIFY);
         Info.setMinHeight(100);
         Info.setPrefWidth(Double.MAX_VALUE);
-        Info.setAlignment(CENTER);
+        Info.setAlignment(Pos.CENTER);
         Info.setStyle("-fx-background-color: green");
 
         GameBoard.setTop(Info);
@@ -315,7 +303,7 @@ public class Lauamang{
         }); //akna sulgedes läheb programm kinni
     }
 
-    public void LooVasakVali (){
+    private void LooVasakVali (){
     /* Loome vasaku välja */
         VBox VasakVali = new VBox();
         VasakVali.setSpacing(10);

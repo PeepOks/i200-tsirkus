@@ -2,9 +2,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-/**
- * Created by Peep on 12.12.2015.
- */
 public class Nupp {
     private static Image kollane = new Image("pildid/kollane.gif");
     private static ImagePattern kollaseNupuPilt = new ImagePattern(kollane);
@@ -23,7 +20,7 @@ public class Nupp {
         nupuVarv = varvus;
         looNupp(nupuVarv);
 
-    };
+    }
 
     private Rectangle looNupp(String varv){
         if (varv.toLowerCase().equals("punane")){
@@ -67,9 +64,5 @@ public class Nupp {
     public void mineLauale() {
         //System.out.println("Nupp läheb mängulauale");
         Lauamang.NuppudeAla.getChildren().add(this.nupp);
-    }
-
-    public void mineAlgusesse() {
-        Lauamang.ManguRuudud[1].getChildren().add(this.nupp);
     }
 }
